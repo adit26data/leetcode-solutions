@@ -1,10 +1,24 @@
-int maxFrequency(vector<int>& A, long k) {
-        int i = 0, j;
-        sort(A.begin(), A.end());
-        for (j = 0; j < A.size(); ++j) {
-            k += A[j];
-            if (k < (long)A[j] * (j - i + 1))
-                k -= A[i++];
+sort(nums.begin(),nums.end());
+        int ans=0;
+        int j=0;
+        long long int res=0;
+        for(int i=0;i<nums.size();i++){
+            res+= nums[i];
+            long long x=(i+1);
+            long long temp=nums[i]*(x);
+
+            if((temp-res)<=k){
+
+            }else{
+                while(res>k && j<i){
+                    long long y=(i-j+1);
+                    long long t=nums[i]*y;
+                    if(t-res<=k) break;
+                    res-= nums[j];
+                    j++;
+                }
+            }
+            ans=max(ans,(i-j+1));   
         }
-        return j - i;
-    }
+        
+        return ans;
