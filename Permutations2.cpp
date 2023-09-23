@@ -1,0 +1,65 @@
+static bool     _foo = ios::sync_with_stdio(false);
+static ostream* _bar = cin.tie(NULL);
+class Solution {
+public:
+    void permute(vector<vector<int>>&ans, vector<int>&r, vector<int>&nums, vector<int>&pos, int size)
+    {
+        if(r.size()==size)
+        {
+            ans.push_back(r);
+            return;
+        }
+        for(int i=0;i<nums.size();i++)
+        {
+            if(find(pos.begin(), pos.end(), i)!=pos.end())
+               continue;
+            r.push_back(nums[i]);
+            pos.push_back(i);
+            permute(ans,r,nums,pos,size);
+            r.pop_back();
+            pos.pop_back();
+        }
+    }
+    vector<vector<int>> permuteUnique(vector<int>& nums) 
+    {
+        vector<vector<int>>ans;
+        vector<int>r;
+        vector<int>pos;
+        permute(ans,r,nums,pos,nums.size());
+        sort(ans.begin(), ans.end());
+        ans.erase(unique(ans.begin(), ans.end()), ans.end());
+        return ans;
+        
+    }
+};
+
+
+
+//more effecient solution
+
+// class Solution {
+// public:
+//     void recursion(vector<int> num, int i, int n, vector<vector<int> > &result) {
+//         if(i == n-1){
+//             result.push_back(num);
+//             return;
+//         }
+
+//         for(int k = i; k < n; k++){
+//             if(k != i && num[k] == num[i]) continue;
+
+//             swap(num[k], num[i]);
+//             recursion(num, i+1, n, result);
+//         }
+//     }
+//     vector<vector<int> > permuteUnique(vector<int> &num) {
+//         sort(num.begin(), num.end());
+
+//         int n = num.size();
+
+//         vector<vector<int>> result;
+//         recursion(num, 0, n, result);
+        
+//         return result;
+//     }
+// };
